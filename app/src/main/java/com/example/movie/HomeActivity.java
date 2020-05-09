@@ -5,8 +5,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -15,7 +19,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements MovieItemClickListener {
 
     private List<Slide> lstSlides;
     private TabLayout indicator;
@@ -54,9 +58,23 @@ public class HomeActivity extends AppCompatActivity {
         lstMovie.add(new Movie("New Life", R.drawable.newlife));
         lstMovie.add(new Movie("Super Book", R.drawable.superbook));
 
-        MovieAdapter movieAdapter = new MovieAdapter(this, lstMovie);
+        MovieAdapter movieAdapter = new MovieAdapter(this, lstMovie, this);
         MoviesRV.setAdapter(movieAdapter);
         MoviesRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+    }
+
+    @Override
+    public void onMovieClick(Movie movie, ImageView movieImageView) {
+        // Here we send movie information to detail activity
+        // Also we will create the transition animation between the two actitivies.
+
+        Intent intent = new Intent(this, MovieDatailActivity.class);
+        intent.putExtra("title", movie.getTitle());
+        intent.putExtra("imgUrl", movie.getThumbnail());
+
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this, movieImageView, "sharedName");
+
+        startActivity(intent, options.toBundle());
     }
 
     class SliderTimer extends TimerTask {
