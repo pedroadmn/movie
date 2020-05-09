@@ -1,9 +1,12 @@
 package com.example.movie;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.widget.LinearLayout;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -17,6 +20,7 @@ public class HomeActivity extends AppCompatActivity {
     private List<Slide> lstSlides;
     private TabLayout indicator;
     private ViewPager sliderPager;
+    private RecyclerView MoviesRV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +29,7 @@ public class HomeActivity extends AppCompatActivity {
 
         sliderPager = findViewById(R.id.slider_pager);
         indicator = findViewById(R.id.indicator);
+        MoviesRV = findViewById(R.id.Rv_movie);
 
         lstSlides = new ArrayList<Slide>();
         lstSlides.add(new Slide(R.drawable.slide1, "Slide 1 \nmore text here"));
@@ -39,6 +44,19 @@ public class HomeActivity extends AppCompatActivity {
         timer.scheduleAtFixedRate(new HomeActivity.SliderTimer(), 4000, 6000);
 
         indicator.setupWithViewPager(sliderPager, true);
+
+        //Recycleview Setup
+        // ini data
+
+        List<Movie> lstMovie = new ArrayList<>();
+        lstMovie.add(new Movie("Come Unto Me", R.drawable.comeuntome));
+        lstMovie.add(new Movie("Gods Compass", R.drawable.godscompass));
+        lstMovie.add(new Movie("New Life", R.drawable.newlife));
+        lstMovie.add(new Movie("Super Book", R.drawable.superbook));
+
+        MovieAdapter movieAdapter = new MovieAdapter(this, lstMovie);
+        MoviesRV.setAdapter(movieAdapter);
+        MoviesRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
     }
 
     class SliderTimer extends TimerTask {
