@@ -1,4 +1,4 @@
-package com.example.movie;
+package com.example.movie.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
+
+import com.example.movie.R;
+import com.example.movie.models.Slide;
 
 import java.util.List;
 

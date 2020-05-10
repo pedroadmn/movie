@@ -1,4 +1,4 @@
-package com.example.movie;
+package com.example.movie.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,9 +9,13 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
+import com.example.movie.models.Movie;
+import com.example.movie.adapters.MovieAdapter;
+import com.example.movie.adapters.MovieItemClickListener;
+import com.example.movie.R;
+import com.example.movie.models.Slide;
+import com.example.movie.adapters.SliderPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -53,10 +57,10 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         // ini data
 
         List<Movie> lstMovie = new ArrayList<>();
-        lstMovie.add(new Movie("Come Unto Me", R.drawable.comeuntome));
-        lstMovie.add(new Movie("Gods Compass", R.drawable.godscompass));
-        lstMovie.add(new Movie("New Life", R.drawable.newlife));
-        lstMovie.add(new Movie("Super Book", R.drawable.superbook));
+        lstMovie.add(new Movie("Come Unto Me", R.drawable.comeuntome, R.drawable.unmissablecover));
+        lstMovie.add(new Movie("Gods Compass", R.drawable.godscompass, R.drawable.innocentscover));
+        lstMovie.add(new Movie("New Life", R.drawable.newlife, R.drawable.smartercover));
+        lstMovie.add(new Movie("Super Book", R.drawable.superbook, R.drawable.smartercover));
 
         MovieAdapter movieAdapter = new MovieAdapter(this, lstMovie, this);
         MoviesRV.setAdapter(movieAdapter);
@@ -71,6 +75,7 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         Intent intent = new Intent(this, MovieDatailActivity.class);
         intent.putExtra("title", movie.getTitle());
         intent.putExtra("imgUrl", movie.getThumbnail());
+        intent.putExtra("imgCover", movie.getCoverPhoto());
 
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this, movieImageView, "sharedName");
 
