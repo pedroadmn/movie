@@ -1,15 +1,23 @@
 package com.example.movie.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.movie.R;
+import com.example.movie.adapters.CastAdapter;
+import com.example.movie.models.Cast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MovieDatailActivity extends AppCompatActivity {
 
@@ -18,16 +26,21 @@ public class MovieDatailActivity extends AppCompatActivity {
     private TextView tv_title;
     private TextView tv_description;
     private FloatingActionButton play_fab;
-
+    private RecyclerView Rv_cast;
+    private CastAdapter castAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
         iniViews();
+        // Setup List Cast
+        setupRvCast();
     }
 
     void iniViews() {
+        Rv_cast = findViewById(R.id.rv_cast);
+
         play_fab = findViewById(R.id.play_fab);
 
         int imageResourceId = getIntent().getExtras().getInt("imgUrl");
@@ -50,6 +63,21 @@ public class MovieDatailActivity extends AppCompatActivity {
         MovieCoverImg.setAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_animation));
         play_fab.setAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_animation));
     }
+
+    void setupRvCast() {
+        List<Cast> mData = new ArrayList<>();
+        mData.add(new Cast("Momoa", R.drawable.cast1));
+        mData.add(new Cast("Julia", R.drawable.cast2));
+        mData.add(new Cast("Erick", R.drawable.cast3));
+        mData.add(new Cast("Mat", R.drawable.cast4));
+        mData.add(new Cast("Bond", R.drawable.cast5));
+        mData.add(new Cast("Robot", R.drawable.cast6));
+
+        castAdapter = new CastAdapter(this, mData);
+        Rv_cast.setAdapter(castAdapter);
+        Rv_cast.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+    }
+
 
 
 }

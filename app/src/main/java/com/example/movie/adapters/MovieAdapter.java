@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.movie.R;
 import com.example.movie.models.Movie;
 
@@ -37,7 +38,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MovieAdapter.MyViewHolder myViewHolder, int i) {
         myViewHolder.TvTitle.setText(mData.get(i).getTitle());
-        myViewHolder.ImgMovie.setImageResource(mData.get(i).getThumbnail());
+        Glide.with(context).load(mData.get(i).getThumbnail()).into(myViewHolder.ImgMovie);
+        //myViewHolder.ImgMovie.setImageResource(mData.get(i).getThumbnail());
     }
 
     @Override
