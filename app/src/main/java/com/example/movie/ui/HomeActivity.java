@@ -10,7 +10,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 
-import com.example.movie.models.Movie;
+import com.example.movie.api.ApiService;
+import com.example.movie.api.response.MovieResponse;
+import com.example.movie.api.response.MovieResult;
 import com.example.movie.adapters.MovieAdapter;
 import com.example.movie.adapters.MovieItemClickListener;
 import com.example.movie.R;
@@ -23,6 +25,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity implements MovieItemClickListener {
 
@@ -47,18 +53,45 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
     private void iniWeekMovies() {
         //Recycleview Setup
         // ini data
-        MovieAdapter weekMovieAdapter = new MovieAdapter(this, DataSource.getWeekMovies(), this);
-        MoviesRvWeek.setAdapter(weekMovieAdapter);
-        MoviesRvWeek.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        ApiService.getInstance().getPopularMovies("b716390ac8f59773894a29bdcdb2f4be")
+                .enqueue(new Callback<MovieResult>() {
+                    @Override
+                    public void onResponse(Call<MovieResult> call, Response<MovieResult> response) {
+                        MovieAdapter weekMovieAdapter = new MovieAdapter(HomeActivity.this, response.body().getMovieResult(), HomeActivity.this);
+
+                        MoviesRvWeek.setLayoutManager(new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                        MoviesRvWeek.setAdapter(weekMovieAdapter);
+                    }
+
+                    @Override
+                    public void onFailure(Call<MovieResult> call, Throwable t) {
+
+                    }
+                });
+
     }
 
 
     private void iniPopularMovies() {
         //Recycleview Setup
         // ini data
-        MovieAdapter movieAdapter = new MovieAdapter(this, DataSource.getPopularMovies(), this);
-        MoviesRV.setAdapter(movieAdapter);
-        MoviesRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        ApiService.getInstance().getPopularMovies("b716390ac8f59773894a29bdcdb2f4be")
+                .enqueue(new Callback<MovieResult>() {
+                    @Override
+                    public void onResponse(Call<MovieResult> call, Response<MovieResult> response) {
+                        if (response.isSuccessful()){
+                            MovieAdapter movieAdapter = new MovieAdapter(HomeActivity.this, response.body().getMovieResult(), HomeActivity.this);
+
+                            MoviesRV.setLayoutManager(new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                            MoviesRV.setAdapter(movieAdapter);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<MovieResult> call, Throwable t) {
+
+                    }
+                });
     }
 
     private void initSlider() {
@@ -85,14 +118,14 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
     }
 
     @Override
-    public void onMovieClick(Movie movie, ImageView movieImageView) {
+    public void onMovieClick(MovieResponse movie, ImageView movieImageView) {
         // Here we send movie information to detail activity
         // Also we will create the transition animation between the two actitivies.
 
         Intent intent = new Intent(this, MovieDatailActivity.class);
-        intent.putExtra("title", movie.getTitle());
-        intent.putExtra("imgUrl", movie.getThumbnail());
-        intent.putExtra("imgCover", movie.getCoverPhoto());
+        intent.putExtra("title", movie.getOriginalTitle());
+        intent.putExtra("imgUrl", movie.getPosterPath());
+        intent.putExtra("imgCover", movie.getPosterPath());
 
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this, movieImageView, "sharedName");
 

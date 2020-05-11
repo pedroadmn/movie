@@ -12,17 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.movie.R;
-import com.example.movie.models.Movie;
+import com.example.movie.api.response.MovieResponse;
 
 import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder> {
 
     Context context;
-    List<Movie> mData;
+    List<MovieResponse> mData;
     MovieItemClickListener movieItemClickListener;
 
-    public MovieAdapter(Context context, List<Movie> mData, MovieItemClickListener listener) {
+    public MovieAdapter(Context context, List<MovieResponse> mData, MovieItemClickListener listener) {
         this.context = context;
         this.mData = mData;
         this.movieItemClickListener = listener;
@@ -37,9 +37,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull MovieAdapter.MyViewHolder myViewHolder, int i) {
-        myViewHolder.TvTitle.setText(mData.get(i).getTitle());
-        Glide.with(context).load(mData.get(i).getThumbnail()).into(myViewHolder.ImgMovie);
+        myViewHolder.TvTitle.setText(mData.get(i).getOriginalTitle());
+        Glide.with(context).load(movieImagePathBuilder(mData.get(i).getPosterPath())).into(myViewHolder.ImgMovie);
         //myViewHolder.ImgMovie.setImageResource(mData.get(i).getThumbnail());
+    }
+
+    public static String movieImagePathBuilder(String imagePath) {
+        return "https://image.tmdb.org/t/p/" +
+                "w500" +
+                imagePath;
     }
 
     @Override
