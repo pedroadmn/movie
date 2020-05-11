@@ -18,7 +18,6 @@ import com.example.movie.adapters.MovieItemClickListener;
 import com.example.movie.R;
 import com.example.movie.models.Slide;
 import com.example.movie.adapters.SliderPagerAdapter;
-import com.example.movie.utils.DataSource;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -47,7 +46,6 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         initSlider();
         iniPopularMovies();
         iniWeekMovies();
-
     }
 
     private void iniWeekMovies() {
@@ -68,9 +66,7 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
 
                     }
                 });
-
     }
-
 
     private void iniPopularMovies() {
         //Recycleview Setup
@@ -123,9 +119,11 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         // Also we will create the transition animation between the two actitivies.
 
         Intent intent = new Intent(this, MovieDatailActivity.class);
+        intent.putExtra("id", movie.getId());
         intent.putExtra("title", movie.getOriginalTitle());
+        intent.putExtra("overview", movie.getOverview());
         intent.putExtra("imgUrl", movie.getPosterPath());
-        intent.putExtra("imgCover", movie.getPosterPath());
+        intent.putExtra("imgCover", movie.getBackdropPath());
 
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this, movieImageView, "sharedName");
 

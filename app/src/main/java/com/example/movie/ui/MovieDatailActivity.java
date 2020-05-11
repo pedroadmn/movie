@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -40,24 +39,25 @@ public class MovieDatailActivity extends AppCompatActivity {
 
     void iniViews() {
         Rv_cast = findViewById(R.id.rv_cast);
-
         play_fab = findViewById(R.id.play_fab);
 
-        int imageResourceId = getIntent().getExtras().getInt("imgUrl");
+        String imageResourceId = getIntent().getExtras().getString("imgUrl");
         MovieThumbnailImg = findViewById(R.id.detail_movie_img);
-        Glide.with(this).load(imageResourceId).into(MovieThumbnailImg);
+        Glide.with(this).load(movieImagePathBuilder(imageResourceId)).into(MovieThumbnailImg);
 
-        int imageCover = getIntent().getExtras().getInt("imgCover");
+        String imageCover = getIntent().getExtras().getString("imgCover");
         MovieCoverImg = findViewById(R.id.detail_movie_cover);
-        Glide.with(this).load(imageCover).into(MovieCoverImg);
+        Glide.with(this).load(movieImagePathBuilder(imageCover)).into(MovieCoverImg);
 
         String movieTitle = getIntent().getExtras().getString("title");
         tv_title = findViewById(R.id.detail_movie_title);
         tv_title.setText(movieTitle);
 
-        getSupportActionBar().setTitle(movieTitle);
-
+        String movieDescription = getIntent().getExtras().getString("overview");
         tv_description = findViewById(R.id.detail_movie_desc);
+        tv_description.setText(movieDescription);
+
+        getSupportActionBar().setTitle(movieTitle);
 
         // Setup animation
         MovieCoverImg.setAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_animation));
@@ -78,6 +78,9 @@ public class MovieDatailActivity extends AppCompatActivity {
         Rv_cast.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
     }
 
-
-
+    public static String movieImagePathBuilder(String imagePath) {
+        return "https://image.tmdb.org/t/p/" +
+                "w500" +
+                imagePath;
+    }
 }
