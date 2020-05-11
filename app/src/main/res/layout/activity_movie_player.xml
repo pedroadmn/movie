@@ -7,8 +7,8 @@
     tools:context=".ui.MoviePlayerActivity"
     android:background="@color/player_bg">
 
-    <com.google.android.exoplayer2.ui.PlayerView
-        android:id="@+id/movie_exo_player"
+    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+        android:id="@+id/youtube_player_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/video_player_bg"
@@ -16,6 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:shutter_background_color="@color/shutter_bg"></com.google.android.exoplayer2.ui.PlayerView>
+        app:shutter_background_color="@color/shutter_bg"
+        app:showFullScreenButton="false" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

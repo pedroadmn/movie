@@ -4,19 +4,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.movie.R;
 import com.example.movie.adapters.CastAdapter;
+import com.example.movie.adapters.MovieAdapter;
+import com.example.movie.api.ApiService;
+import com.example.movie.api.response.MovieResult;
+import com.example.movie.api.response.MovieVideoResult;
 import com.example.movie.models.Cast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MovieDatailActivity extends AppCompatActivity {
 
@@ -27,6 +38,7 @@ public class MovieDatailActivity extends AppCompatActivity {
     private FloatingActionButton play_fab;
     private RecyclerView Rv_cast;
     private CastAdapter castAdapter;
+    private String movieId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,5 +94,29 @@ public class MovieDatailActivity extends AppCompatActivity {
         return "https://image.tmdb.org/t/p/" +
                 "w500" +
                 imagePath;
+    }
+
+    public void showTrailer(View view) {
+        String movieId = getIntent().getExtras().getString("id");
+
+        ApiService.getInstance().getTrailers(movieId, "b716390ac8f59773894a29bdcdb2f4be")
+            .enqueue(new Callback<MovieVideoResult>() {
+            @Override
+            public void onResponse(Call<MovieVideoResult> call, Response<MovieVideoResult> response) {
+                //String urlVideo = "https://youtube.com/watch?v=" + response.body().getTrailerResult().get(0).getKey();
+                Intent intent = new Intent(getApplicationContext(), MoviePlayerActivity.class);
+                intent.putExtra("movieVideoUrl", response.body().getTrailerResult().get(0).getKey());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(Call<MovieVideoResult> call, Throwable t) {
+
+            }
+        });
+
+
+
+
     }
 }
