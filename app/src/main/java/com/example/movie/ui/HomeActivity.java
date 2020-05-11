@@ -16,6 +16,7 @@ import com.example.movie.adapters.MovieItemClickListener;
 import com.example.movie.R;
 import com.example.movie.models.Slide;
 import com.example.movie.adapters.SliderPagerAdapter;
+import com.example.movie.utils.DataSource;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -29,16 +30,38 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
     private TabLayout indicator;
     private ViewPager sliderPager;
     private RecyclerView MoviesRV;
+    private RecyclerView MoviesRvWeek;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sliderPager = findViewById(R.id.slider_pager);
-        indicator = findViewById(R.id.indicator);
-        MoviesRV = findViewById(R.id.Rv_movie);
+        initViews();
+        initSlider();
+        iniPopularMovies();
+        iniWeekMovies();
 
+    }
+
+    private void iniWeekMovies() {
+        //Recycleview Setup
+        // ini data
+        MovieAdapter weekMovieAdapter = new MovieAdapter(this, DataSource.getWeekMovies(), this);
+        MoviesRvWeek.setAdapter(weekMovieAdapter);
+        MoviesRvWeek.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+    }
+
+
+    private void iniPopularMovies() {
+        //Recycleview Setup
+        // ini data
+        MovieAdapter movieAdapter = new MovieAdapter(this, DataSource.getPopularMovies(), this);
+        MoviesRV.setAdapter(movieAdapter);
+        MoviesRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+    }
+
+    private void initSlider() {
         lstSlides = new ArrayList<Slide>();
         lstSlides.add(new Slide(R.drawable.slide1, "Slide 1 \nmore text here"));
         lstSlides.add(new Slide(R.drawable.slide2, "Slide 2 \nmore text here"));
@@ -49,22 +72,16 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         sliderPager.setAdapter(adapter);
 
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new HomeActivity.SliderTimer(), 4000, 6000);
+        timer.scheduleAtFixedRate(new SliderTimer(), 4000, 6000);
 
         indicator.setupWithViewPager(sliderPager, true);
+    }
 
-        //Recycleview Setup
-        // ini data
-
-        List<Movie> lstMovie = new ArrayList<>();
-        lstMovie.add(new Movie("Come Unto Me", R.drawable.comeuntome, R.drawable.unmissablecover));
-        lstMovie.add(new Movie("Gods Compass", R.drawable.godscompass, R.drawable.innocentscover));
-        lstMovie.add(new Movie("New Life", R.drawable.newlife, R.drawable.smartercover));
-        lstMovie.add(new Movie("Super Book", R.drawable.superbook, R.drawable.smartercover));
-
-        MovieAdapter movieAdapter = new MovieAdapter(this, lstMovie, this);
-        MoviesRV.setAdapter(movieAdapter);
-        MoviesRV.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+    private void initViews() {
+        sliderPager = findViewById(R.id.slider_pager);
+        indicator = findViewById(R.id.indicator);
+        MoviesRV = findViewById(R.id.Rv_movie);
+        MoviesRvWeek = findViewById(R.id.rv_movie_week);
     }
 
     @Override
