@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,17 +34,25 @@ import retrofit2.Response;
 public class HomeActivity extends AppCompatActivity implements MovieItemClickListener {
 
     private List<Slide> lstSlides;
-    private TabLayout indicator;
-    private ViewPager sliderPager;
-    private RecyclerView MoviesRV;
-    private RecyclerView MoviesRvWeek;
+
+    @BindView(R.id.indicator)
+    TabLayout indicator;
+
+    @BindView(R.id.slider_pager)
+    ViewPager sliderPager;
+
+    @BindView(R.id.Rv_movie)
+    RecyclerView MoviesRV;
+
+    @BindView(R.id.rv_movie_week)
+    RecyclerView MoviesRvWeek;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initViews();
+        ButterKnife.bind(this);
         initSlider();
         iniPopularMovies();
         iniWeekMovies();
@@ -104,13 +114,6 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         timer.scheduleAtFixedRate(new SliderTimer(), 4000, 6000);
 
         indicator.setupWithViewPager(sliderPager, true);
-    }
-
-    private void initViews() {
-        sliderPager = findViewById(R.id.slider_pager);
-        indicator = findViewById(R.id.indicator);
-        MoviesRV = findViewById(R.id.Rv_movie);
-        MoviesRvWeek = findViewById(R.id.rv_movie_week);
     }
 
     @Override
