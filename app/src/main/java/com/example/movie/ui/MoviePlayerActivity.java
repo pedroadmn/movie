@@ -17,15 +17,21 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MoviePlayerActivity extends AppCompatActivity {
 
-    private PlayerView playerView;
+    @BindView(R.id.movie_exo_player)
+    PlayerView playerView;
+
     private SimpleExoPlayer simpleExoPlayer;
     public static final String VIDEO_TEST_URL = "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
 
         setFullScreen();
         setContentView(R.layout.activity_movie_player);
@@ -44,7 +50,6 @@ public class MoviePlayerActivity extends AppCompatActivity {
     }
 
     private void iniExoPlayer() {
-        playerView = findViewById(R.id.movie_exo_player);
         simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(this);
         playerView.setPlayer(simpleExoPlayer);
         DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this, Util.getUserAgent(this, "appname"));

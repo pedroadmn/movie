@@ -18,43 +18,52 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MovieDatailActivity extends AppCompatActivity {
 
-    private ImageView MovieThumbnailImg;
-    private ImageView MovieCoverImg;
-    private TextView tv_title;
-    private TextView tv_description;
-    private FloatingActionButton play_fab;
-    private RecyclerView Rv_cast;
+    @BindView(R.id.detail_movie_img)
+    ImageView MovieThumbnailImg;
+
+    @BindView(R.id.detail_movie_cover)
+    ImageView MovieCoverImg;
+
+    @BindView(R.id.detail_movie_title)
+    TextView tv_title;
+
+    @BindView(R.id.detail_movie_desc)
+    TextView tv_description;
+
+    @BindView(R.id.play_fab)
+    FloatingActionButton play_fab;
+
+    @BindView(R.id.rv_cast)
+    RecyclerView Rv_cast;
+
     private CastAdapter castAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
+        ButterKnife.bind(this);
         iniViews();
         // Setup List Cast
         setupRvCast();
     }
 
     void iniViews() {
-        Rv_cast = findViewById(R.id.rv_cast);
-        play_fab = findViewById(R.id.play_fab);
-
         String imageResourceId = getIntent().getExtras().getString("imgUrl");
-        MovieThumbnailImg = findViewById(R.id.detail_movie_img);
         Glide.with(this).load(movieImagePathBuilder(imageResourceId)).into(MovieThumbnailImg);
 
         String imageCover = getIntent().getExtras().getString("imgCover");
-        MovieCoverImg = findViewById(R.id.detail_movie_cover);
         Glide.with(this).load(movieImagePathBuilder(imageCover)).into(MovieCoverImg);
 
         String movieTitle = getIntent().getExtras().getString("title");
-        tv_title = findViewById(R.id.detail_movie_title);
         tv_title.setText(movieTitle);
 
         String movieDescription = getIntent().getExtras().getString("overview");
-        tv_description = findViewById(R.id.detail_movie_desc);
         tv_description.setText(movieDescription);
 
         getSupportActionBar().setTitle(movieTitle);
