@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         iniPopularMovies();
         iniWeekMovies();
 
-        //iniFavoritesRv();
+        iniFavoritesRv();
     }
 
     private void iniFavoritesRv() {
@@ -74,36 +74,21 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         List<MovieResponse> listRes = new ArrayList<>();
 
         favoriteViewModel.getAllFavorites().observe(HomeActivity.this, new Observer<List<Favorite>>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onChanged(List<Favorite> favorites) {
-                favorites.forEach(favorite -> {
-                    listRes.add(getMovieById(favorite.getMovie_id()));
-                });
+                for (int i =0; i<favorites.size(); i++) {
+                    listRes.add(
+                            new MovieResponse(favorites.get(i).getMovie_id(),favorites.get(i).getPosterPath(),
+                                    favorites.get(i).getBackdropPath(),favorites.get(i).getOriginalTitle(),
+                                    favorites.get(i).getOverview()));
+                }
+                MovieAdapter movieAdapter = new MovieAdapter(HomeActivity.this, listRes, HomeActivity.this);
+
+                MovieFavories.setLayoutManager(new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                MovieFavories.setAdapter(movieAdapter);
             }
         });
-        MovieAdapter movieAdapter = new MovieAdapter(HomeActivity.this, listRes, HomeActivity.this);
 
-        MoviesRV.setLayoutManager(new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false));
-        MoviesRV.setAdapter(movieAdapter);
-    }
-
-    private MovieResponse getMovieById(int id) {
-        List<MovieResponse> body = new ArrayList<>();
-        ApiService.getInstance().getMovieById(id,"b716390ac8f59773894a29bdcdb2f4be")
-                .enqueue(new Callback<MovieResponse>() {
-                    @Override
-                    public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
-                        if (response.isSuccessful()) {
-                            body.add(response.body());
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<MovieResponse> call, Throwable t) {
-
-                    }
-                });
-        return body.get(0);
     }
 
     private void iniWeekMovies() {

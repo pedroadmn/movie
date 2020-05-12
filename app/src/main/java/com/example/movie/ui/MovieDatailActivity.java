@@ -88,10 +88,15 @@ public class MovieDatailActivity extends AppCompatActivity {
 
     private void favoriteAction(FavoritesViewModel favoriteViewModel) {
         String id = getIntent().getExtras().getString("id");
+        String imageResourceId = getIntent().getExtras().getString("imgUrl");
+        String imageCover = getIntent().getExtras().getString("imgCover");
+        String movieTitle = getIntent().getExtras().getString("title");
+        String movieDescription = getIntent().getExtras().getString("overview");
+
         fab_favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Favorite favorite = new Favorite(Integer.parseInt(id));
+                Favorite favorite = new Favorite(Integer.parseInt(id),imageCover,imageResourceId,movieTitle,movieDescription);
                 favoriteViewModel.getAllFavorites().observe(MovieDatailActivity.this, new Observer<List<Favorite>>() {
                     @Override
                     public void onChanged(List<Favorite> favorites) {
