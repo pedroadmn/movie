@@ -82,11 +82,8 @@ public class MovieDatailActivity extends AppCompatActivity {
         iniCast();
         // Favorite
         FavoritesViewModel favoriteViewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
+        //favoriteAction(favoriteViewModel);
 
-        favoriteAction(favoriteViewModel);
-    }
-
-    private void favoriteAction(FavoritesViewModel favoriteViewModel) {
         String id = getIntent().getExtras().getString("id");
         String imageResourceId = getIntent().getExtras().getString("imgUrl");
         String imageCover = getIntent().getExtras().getString("imgCover");
@@ -97,19 +94,21 @@ public class MovieDatailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Favorite favorite = new Favorite(Integer.parseInt(id),imageCover,imageResourceId,movieTitle,movieDescription);
-                favoriteViewModel.getAllFavorites().observe(MovieDatailActivity.this, new Observer<List<Favorite>>() {
-                    @Override
-                    public void onChanged(List<Favorite> favorites) {
-                        favoriteViewModel.insert(favorite);
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                "Added to favorites",
-                                Toast.LENGTH_SHORT);
+                favoriteViewModel.insert(favorite);
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Added to favorites",
+                        Toast.LENGTH_SHORT);
 
-                        toast.show();
-                    }
-                });
+                toast.show();
             }
         });
+
+    }
+
+    private void favoriteAction(FavoritesViewModel favoriteViewModel) {
+
+
+
     }
 
     void iniViews() {

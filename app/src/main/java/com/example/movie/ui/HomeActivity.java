@@ -76,6 +76,7 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         favoriteViewModel.getAllFavorites().observe(HomeActivity.this, new Observer<List<Favorite>>() {
             @Override
             public void onChanged(List<Favorite> favorites) {
+                listRes.clear();
                 for (int i =0; i<favorites.size(); i++) {
                     listRes.add(
                             new MovieResponse(favorites.get(i).getMovie_id(),favorites.get(i).getPosterPath(),
@@ -88,7 +89,6 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
                 MovieFavories.setAdapter(movieAdapter);
             }
         });
-
     }
 
     private void iniWeekMovies() {
