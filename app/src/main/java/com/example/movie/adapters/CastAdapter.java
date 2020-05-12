@@ -35,7 +35,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull CastAdapter.CastViewHolder holder, int i) {
-        Glide.with(mContext).load(Urls.movieImage500PathBuilder(mData.get(i).getProfile_path())).into(holder.img);
+        Glide.with(mContext).load(Urls.movieImage185PathBuilder(mData.get(i).getProfile_path())).into(holder.img);
     }
 
     @Override

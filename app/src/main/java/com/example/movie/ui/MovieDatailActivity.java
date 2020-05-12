@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.movie.R;
@@ -17,6 +20,18 @@ import com.example.movie.api.response.CreditsResult;
 import com.example.movie.utils.Urls;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import com.example.movie.adapters.MovieAdapter;
+import com.example.movie.api.ApiService;
+import com.example.movie.api.response.MovieResult;
+import com.example.movie.api.response.MovieVideoResult;
+import com.example.movie.models.Cast;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -44,6 +59,7 @@ public class MovieDatailActivity extends AppCompatActivity {
     RecyclerView Rv_cast;
 
     private CastAdapter castAdapter;
+    private String movieId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +94,8 @@ public class MovieDatailActivity extends AppCompatActivity {
     private void iniCast() {
         //Recycleview Setup
         // ini data
-        int id = getIntent().getExtras().getInt("id");
-        ApiService.getInstance().getCast(id, "b716390ac8f59773894a29bdcdb2f4be")
+        String id = getIntent().getExtras().getString("id");
+        ApiService.getInstance().getCast(Integer.parseInt(id), "b716390ac8f59773894a29bdcdb2f4be")
                 .enqueue(new Callback<CreditsResult>() {
 
                     @Override
@@ -96,5 +112,30 @@ public class MovieDatailActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    public void showTrailer(View view) {
+        String movieId = getIntent().getExtras().getString("id");
+
+        ApiService.getInstance().getTrailers(movieId, "b716390ac8f59773894a29bdcdb2f4be")
+            .enqueue(new Callback<MovieVideoResult>() {
+            @Override
+            public void onResponse(Call<MovieVideoResult> call, Response<MovieVideoResult> response) {
+                //String urlVideo = "https://youtube.com/watch?v=" + response.body().getTrailerResult().get(0).getKey();
+                Intent intent = new Intent(getApplicationContext(), MoviePlayerActivity.class);
+                assert response.body() != null;
+                intent.putExtra("movieVideoUrl", response.body().getTrailerResult().get(0).getKey());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(Call<MovieVideoResult> call, Throwable t) {
+
+            }
+        });
+
+
+
+
     }
 }
