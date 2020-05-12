@@ -1,12 +1,16 @@
 package com.example.movie.ui;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.ImageView;
 
@@ -16,8 +20,10 @@ import com.example.movie.api.response.MovieResult;
 import com.example.movie.adapters.MovieAdapter;
 import com.example.movie.adapters.MovieItemClickListener;
 import com.example.movie.R;
+import com.example.movie.models.Favorite;
 import com.example.movie.models.Slide;
 import com.example.movie.adapters.SliderPagerAdapter;
+import com.example.movie.utils.FavoritesViewModel;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -47,6 +53,9 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
     @BindView(R.id.rv_movie_week)
     RecyclerView MoviesRvWeek;
 
+    @BindView(R.id.rv_favorites)
+    RecyclerView MovieFavories;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +65,45 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         initSlider();
         iniPopularMovies();
         iniWeekMovies();
+
+        //iniFavoritesRv();
+    }
+
+    private void iniFavoritesRv() {
+        FavoritesViewModel favoriteViewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
+        List<MovieResponse> listRes = new ArrayList<>();
+
+        favoriteViewModel.getAllFavorites().observe(HomeActivity.this, new Observer<List<Favorite>>() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onChanged(List<Favorite> favorites) {
+                favorites.forEach(favorite -> {
+                    listRes.add(getMovieById(favorite.getMovie_id()));
+                });
+            }
+        });
+        MovieAdapter movieAdapter = new MovieAdapter(HomeActivity.this, listRes, HomeActivity.this);
+
+        MoviesRV.setLayoutManager(new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false));
+        MoviesRV.setAdapter(movieAdapter);
+    }
+
+    private MovieResponse getMovieById(int id) {
+        List<MovieResponse> body = new ArrayList<>();
+        ApiService.getInstance().getMovieById(id,"b716390ac8f59773894a29bdcdb2f4be")
+                .enqueue(new Callback<MovieResponse>() {
+                    @Override
+                    public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
+                        if (response.isSuccessful()) {
+                            body.add(response.body());
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<MovieResponse> call, Throwable t) {
+
+                    }
+                });
+        return body.get(0);
     }
 
     private void iniWeekMovies() {
