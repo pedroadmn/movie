@@ -81,7 +81,7 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
     private void iniPopularMovies() {
         //Recycleview Setup
         // ini data
-        ApiService.getInstance().getPopularMovies("b716390ac8f59773894a29bdcdb2f4be")
+        ApiService.getInstance().getTopRatedMovies("b716390ac8f59773894a29bdcdb2f4be")
                 .enqueue(new Callback<MovieResult>() {
                     @Override
                     public void onResponse(Call<MovieResult> call, Response<MovieResult> response) {

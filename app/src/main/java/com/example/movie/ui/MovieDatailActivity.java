@@ -15,6 +15,11 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.movie.R;
 import com.example.movie.adapters.CastAdapter;
+import com.example.movie.api.ApiService;
+import com.example.movie.api.response.CreditsResult;
+import com.example.movie.utils.Urls;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import com.example.movie.adapters.MovieAdapter;
 import com.example.movie.api.ApiService;
 import com.example.movie.api.response.MovieResult;
@@ -29,6 +34,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MovieDatailActivity extends AppCompatActivity {
 
@@ -60,15 +68,15 @@ public class MovieDatailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         iniViews();
         // Setup List Cast
-        setupRvCast();
+        iniCast();
     }
 
     void iniViews() {
         String imageResourceId = getIntent().getExtras().getString("imgUrl");
-        Glide.with(this).load(movieImagePathBuilder(imageResourceId)).into(MovieThumbnailImg);
+        Glide.with(this).load(Urls.movieImage500PathBuilder(imageResourceId)).into(MovieThumbnailImg);
 
         String imageCover = getIntent().getExtras().getString("imgCover");
-        Glide.with(this).load(movieImagePathBuilder(imageCover)).into(MovieCoverImg);
+        Glide.with(this).load(Urls.movieImage500PathBuilder(imageCover)).into(MovieCoverImg);
 
         String movieTitle = getIntent().getExtras().getString("title");
         tv_title.setText(movieTitle);
@@ -83,24 +91,27 @@ public class MovieDatailActivity extends AppCompatActivity {
         play_fab.setAnimation(AnimationUtils.loadAnimation(this, R.anim.scale_animation));
     }
 
-    void setupRvCast() {
-        List<Cast> mData = new ArrayList<>();
-        mData.add(new Cast("Momoa", R.drawable.cast1));
-        mData.add(new Cast("Julia", R.drawable.cast2));
-        mData.add(new Cast("Erick", R.drawable.cast3));
-        mData.add(new Cast("Mat", R.drawable.cast4));
-        mData.add(new Cast("Bond", R.drawable.cast5));
-        mData.add(new Cast("Robot", R.drawable.cast6));
+    private void iniCast() {
+        //Recycleview Setup
+        // ini data
+        String id = getIntent().getExtras().getString("id");
+        ApiService.getInstance().getCast(Integer.parseInt(id), "b716390ac8f59773894a29bdcdb2f4be")
+                .enqueue(new Callback<CreditsResult>() {
 
-        castAdapter = new CastAdapter(this, mData);
-        Rv_cast.setAdapter(castAdapter);
-        Rv_cast.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-    }
+                    @Override
+                    public void onResponse(Call<CreditsResult> call, Response<CreditsResult> response) {
+                        if (response.isSuccessful()) {
+                            castAdapter = new CastAdapter(MovieDatailActivity.this, response.body().getCastResult());
+                            Rv_cast.setAdapter(castAdapter);
+                            Rv_cast.setLayoutManager(new LinearLayoutManager(MovieDatailActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                        }
+                    }
 
-    public static String movieImagePathBuilder(String imagePath) {
-        return "https://image.tmdb.org/t/p/" +
-                "w500" +
-                imagePath;
+                    @Override
+                    public void onFailure(Call<CreditsResult> call, Throwable t) {
+
+                    }
+                });
     }
 
     public void showTrailer(View view) {
@@ -112,6 +123,7 @@ public class MovieDatailActivity extends AppCompatActivity {
             public void onResponse(Call<MovieVideoResult> call, Response<MovieVideoResult> response) {
                 //String urlVideo = "https://youtube.com/watch?v=" + response.body().getTrailerResult().get(0).getKey();
                 Intent intent = new Intent(getApplicationContext(), MoviePlayerActivity.class);
+                assert response.body() != null;
                 intent.putExtra("movieVideoUrl", response.body().getTrailerResult().get(0).getKey());
                 startActivity(intent);
             }
