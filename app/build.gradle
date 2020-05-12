@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.movie"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -51,6 +51,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.8.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
     implementation("com.squareup.moshi:moshi:1.9.2")
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
     // ButterKnife library
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'

@@ -122,7 +122,7 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         // Also we will create the transition animation between the two actitivies.
 
         Intent intent = new Intent(this, MovieDatailActivity.class);
-        intent.putExtra("id", movie.getId());
+        intent.putExtra("id", Integer.toString(movie.getId()));
         intent.putExtra("title", movie.getOriginalTitle());
         intent.putExtra("overview", movie.getOverview());
         intent.putExtra("imgUrl", movie.getPosterPath());
