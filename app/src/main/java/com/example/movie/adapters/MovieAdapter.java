@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.movie.R;
 import com.example.movie.api.response.MovieResponse;
+import com.example.movie.utils.Urls;
 
 import java.util.List;
 
@@ -38,14 +39,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MovieAdapter.MyViewHolder myViewHolder, int i) {
         myViewHolder.TvTitle.setText(mData.get(i).getOriginalTitle());
-        Glide.with(context).load(movieImagePathBuilder(mData.get(i).getPosterPath())).into(myViewHolder.ImgMovie);
-        //myViewHolder.ImgMovie.setImageResource(mData.get(i).getThumbnail());
-    }
-
-    public static String movieImagePathBuilder(String imagePath) {
-        return "https://image.tmdb.org/t/p/" +
-                "w500" +
-                imagePath;
+        Glide.with(context).load(Urls.movieImage500PathBuilder(mData.get(i).getPosterPath())).into(myViewHolder.ImgMovie);
     }
 
     @Override

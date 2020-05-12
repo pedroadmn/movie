@@ -11,15 +11,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.movie.R;
-import com.example.movie.models.Cast;
+import com.example.movie.api.response.CastResponse;
+import com.example.movie.utils.Urls;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder> {
     Context mContext;
-    List<Cast> mData;
+    List<CastResponse> mData;
 
-    public CastAdapter(Context mContext, List<Cast> mData) {
+    public CastAdapter(Context mContext, List<CastResponse> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -33,7 +35,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull CastAdapter.CastViewHolder holder, int i) {
-        Glide.with(mContext).load(mData.get(i).getImg_link()).into(holder.img);
+        Glide.with(mContext).load(Urls.movieImage500PathBuilder(mData.get(i).getProfile_path())).into(holder.img);
     }
 
     @Override
