@@ -79,8 +79,8 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
                 listRes.clear();
                 for (int i =0; i<favorites.size(); i++) {
                     listRes.add(
-                            new MovieResponse(favorites.get(i).getMovie_id(),favorites.get(i).getPosterPath(),
-                                    favorites.get(i).getBackdropPath(),favorites.get(i).getOriginalTitle(),
+                            new MovieResponse(favorites.get(i).getMovie_id(),favorites.get(i).getBackdropPath(),
+                                    favorites.get(i).getPosterPath(),favorites.get(i).getOriginalTitle(),
                                     favorites.get(i).getOverview()));
                 }
                 MovieAdapter movieAdapter = new MovieAdapter(HomeActivity.this, listRes, HomeActivity.this);
