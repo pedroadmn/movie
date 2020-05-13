@@ -10,6 +10,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.example.movie.api.ApiService;
@@ -18,6 +19,7 @@ import com.example.movie.api.response.MovieResult;
 import com.example.movie.adapters.MovieAdapter;
 import com.example.movie.adapters.MovieItemClickListener;
 import com.example.movie.R;
+import com.example.movie.api.response.MovieVideoResult;
 import com.example.movie.models.Favorite;
 import com.example.movie.models.Slide;
 import com.example.movie.adapters.SliderPagerAdapter;
@@ -127,13 +129,12 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
     }
 
     private void initSlider() {
-
         ApiService.getInstance().getUpcomingMovies("b716390ac8f59773894a29bdcdb2f4be")
                 .enqueue(new Callback<MovieResult>() {
                     @Override
                     public void onResponse(Call<MovieResult> call, Response<MovieResult> response) {
                         lstSlides = response.body().getMovieResult();
-                        SliderPagerAdapter adapter = new SliderPagerAdapter(HomeActivity.this, lstSlides);
+                        SliderPagerAdapter adapter = new SliderPagerAdapter(HomeActivity.this, lstSlides, HomeActivity.this);
                         sliderPager.setAdapter(adapter);
 
                         Timer timer = new Timer();
@@ -164,6 +165,25 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(HomeActivity.this, movieImageView, "sharedName");
 
         startActivity(intent, options.toBundle());
+    }
+
+    @Override
+    public void onSlideMovieClick(MovieResponse movie) {
+        ApiService.getInstance().getTrailers(Integer.toString(movie.getId()), "b716390ac8f59773894a29bdcdb2f4be")
+                .enqueue(new Callback<MovieVideoResult>() {
+                    @Override
+                    public void onResponse(Call<MovieVideoResult> call, Response<MovieVideoResult> response) {
+                        Intent intent = new Intent(getApplicationContext(), MoviePlayerActivity.class);
+                        assert response.body() != null;
+                        intent.putExtra("movieVideoUrl", response.body().getTrailerResult().get(0).getKey());
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure(Call<MovieVideoResult> call, Throwable t) {
+
+                    }
+                });
     }
 
     class SliderTimer extends TimerTask {

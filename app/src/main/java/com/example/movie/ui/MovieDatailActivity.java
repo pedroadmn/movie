@@ -90,12 +90,6 @@ public class MovieDatailActivity extends AppCompatActivity {
 
     }
 
-    private void favoriteAction(FavoritesViewModel favoriteViewModel) {
-
-
-
-    }
-
     void iniViews() {
         String imageResourceId = getIntent().getExtras().getString("imgUrl");
         Glide.with(this).load(Urls.movieImage500PathBuilder(imageResourceId)).into(MovieThumbnailImg);
@@ -117,8 +111,6 @@ public class MovieDatailActivity extends AppCompatActivity {
     }
 
     private void iniCast() {
-        //Recycleview Setup
-        // ini data
         String id = getIntent().getExtras().getString("id");
         ApiService.getInstance().getCast(Integer.parseInt(id), "b716390ac8f59773894a29bdcdb2f4be")
                 .enqueue(new Callback<CastResult>() {
@@ -146,7 +138,6 @@ public class MovieDatailActivity extends AppCompatActivity {
             .enqueue(new Callback<MovieVideoResult>() {
             @Override
             public void onResponse(Call<MovieVideoResult> call, Response<MovieVideoResult> response) {
-                //String urlVideo = "https://youtube.com/watch?v=" + response.body().getTrailerResult().get(0).getKey();
                 Intent intent = new Intent(getApplicationContext(), MoviePlayerActivity.class);
                 assert response.body() != null;
                 intent.putExtra("movieVideoUrl", response.body().getTrailerResult().get(0).getKey());
