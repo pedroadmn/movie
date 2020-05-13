@@ -26,7 +26,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    
+
     buildTypes.each {
         it.buildConfigField 'String', 'THE_MOVIE_DB_API_TOKEN', MyTheMovieDBApiToken
     }
@@ -64,4 +64,9 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:$roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$roomVersion"
     androidTestImplementation "android.arch.persistence.room:testing:$roomVersion"
+
+    implementation 'com.mobsandgeeks:android-saripaar:2.0.3'
+
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation "com.android.support:cardview-v7:28.0.0"
 }
