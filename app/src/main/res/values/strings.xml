@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Movie</string>
-    <string name="simple_text">MovieMovieMovieMovieMovieMovieMovieMovieMovieMMovieMovieMovieMovieMovieMovieMovieMovieMovieMovieMovieMovieMovieMovieMovieMovieMovieMovieovieMovieMovieMovieMovieMovieMovieMovieMovieMovieMovieMovieMovieMovie</string>
+    <string name="top_rated_category_title">Top Rated Movies</string>
+    <string name="popular_category_title">Popular Films and Movies</string>
+    <string name="favorites_category_title">Favorites</string>
+    <string name="cast_title">Cast</string>
 </resources>

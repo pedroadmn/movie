@@ -152,9 +152,6 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
 
     @Override
     public void onMovieClick(MovieResponse movie, ImageView movieImageView) {
-        // Here we send movie information to detail activity
-        // Also we will create the transition animation between the two actitivies.
-
         Intent intent = new Intent(this, MovieDatailActivity.class);
         intent.putExtra("id", Integer.toString(movie.getId()));
         intent.putExtra("title", movie.getOriginalTitle());

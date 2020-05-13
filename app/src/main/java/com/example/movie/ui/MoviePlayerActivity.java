@@ -22,7 +22,6 @@ public class MoviePlayerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         setFullScreen();
         setContentView(R.layout.activity_movie_player);
         hideActionBar();
