@@ -10,17 +10,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.bumptech.glide.Glide;
 import com.example.movie.R;
+import com.example.movie.api.response.MovieResponse;
 import com.example.movie.models.Slide;
+import com.example.movie.utils.Urls;
 
 import java.util.List;
 
 public class SliderPagerAdapter extends PagerAdapter {
 
     private Context mContext;
-    private List<Slide> mList;
+    private List<MovieResponse> mList;
 
-    public SliderPagerAdapter(Context mContext, List<Slide> mList) {
+    public SliderPagerAdapter(Context mContext, List<MovieResponse> mList) {
         this.mContext = mContext;
         this.mList = mList;
     }
@@ -33,8 +36,8 @@ public class SliderPagerAdapter extends PagerAdapter {
 
         ImageView slideImg = slideLayout.findViewById(R.id.slide_img);
         TextView slideText = slideLayout.findViewById(R.id.slide_title);
-        slideImg.setImageResource(mList.get(position).getImage());
-        slideText.setText(mList.get(position).getTitle());
+        Glide.with(mContext).load(Urls.movieImage500PathBuilder(mList.get(position).getBackdropPath())).into(slideImg);
+        slideText.setText(mList.get(position).getOriginalTitle());
 
         container.addView(slideLayout);
         return slideLayout;

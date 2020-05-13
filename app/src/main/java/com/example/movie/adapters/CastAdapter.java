@@ -13,8 +13,6 @@ import com.bumptech.glide.Glide;
 import com.example.movie.R;
 import com.example.movie.api.response.CastResponse;
 import com.example.movie.utils.Urls;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder> {

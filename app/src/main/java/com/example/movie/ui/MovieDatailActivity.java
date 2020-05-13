@@ -1,9 +1,6 @@
 package com.example.movie.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,31 +17,19 @@ import com.bumptech.glide.Glide;
 import com.example.movie.R;
 import com.example.movie.adapters.CastAdapter;
 import com.example.movie.api.ApiService;
-import com.example.movie.api.response.CreditsResult;
+import com.example.movie.api.response.CastResult;
 import com.example.movie.models.Favorite;
 import com.example.movie.utils.FavoritesViewModel;
-import com.example.movie.utils.MovieRoomDatabase;
 import com.example.movie.utils.Urls;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import com.example.movie.adapters.MovieAdapter;
-import com.example.movie.api.ApiService;
-import com.example.movie.api.response.MovieResult;
 import com.example.movie.api.response.MovieVideoResult;
-import com.example.movie.models.Cast;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MovieDatailActivity extends AppCompatActivity {
 
@@ -136,10 +121,10 @@ public class MovieDatailActivity extends AppCompatActivity {
         // ini data
         String id = getIntent().getExtras().getString("id");
         ApiService.getInstance().getCast(Integer.parseInt(id), "b716390ac8f59773894a29bdcdb2f4be")
-                .enqueue(new Callback<CreditsResult>() {
+                .enqueue(new Callback<CastResult>() {
 
                     @Override
-                    public void onResponse(Call<CreditsResult> call, Response<CreditsResult> response) {
+                    public void onResponse(Call<CastResult> call, Response<CastResult> response) {
                         if (response.isSuccessful()) {
                             castAdapter = new CastAdapter(MovieDatailActivity.this, response.body().getCastResult());
                             Rv_cast.setAdapter(castAdapter);
@@ -148,7 +133,7 @@ public class MovieDatailActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<CreditsResult> call, Throwable t) {
+                    public void onFailure(Call<CastResult> call, Throwable t) {
 
                     }
                 });

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class MovieVideoResponse implements Serializable {
+public class VideoResponse implements Serializable {
     @SerializedName("id")
     private String id;
     @SerializedName("iso_639_1")

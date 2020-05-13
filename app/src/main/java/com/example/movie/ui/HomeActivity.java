@@ -1,6 +1,5 @@
 package com.example.movie.ui;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -10,7 +9,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.widget.ImageView;
 
@@ -39,7 +37,7 @@ import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity implements MovieItemClickListener {
 
-    private List<Slide> lstSlides;
+    private List<MovieResponse> lstSlides;
 
     @BindView(R.id.indicator)
     TabLayout indicator;
@@ -65,11 +63,10 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         initSlider();
         iniPopularMovies();
         iniWeekMovies();
-
-        iniFavoritesRv();
+        iniFavoritesMovies();
     }
 
-    private void iniFavoritesRv() {
+    private void iniFavoritesMovies() {
         FavoritesViewModel favoriteViewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
         List<MovieResponse> listRes = new ArrayList<>();
 
@@ -92,8 +89,6 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
     }
 
     private void iniWeekMovies() {
-        //Recycleview Setup
-        // ini data
         ApiService.getInstance().getPopularMovies("b716390ac8f59773894a29bdcdb2f4be")
                 .enqueue(new Callback<MovieResult>() {
                     @Override
@@ -112,8 +107,6 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
     }
 
     private void iniPopularMovies() {
-        //Recycleview Setup
-        // ini data
         ApiService.getInstance().getTopRatedMovies("b716390ac8f59773894a29bdcdb2f4be")
                 .enqueue(new Callback<MovieResult>() {
                     @Override
@@ -134,19 +127,26 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
     }
 
     private void initSlider() {
-        lstSlides = new ArrayList<Slide>();
-        lstSlides.add(new Slide(R.drawable.slide1, "Slide 1 \nmore text here"));
-        lstSlides.add(new Slide(R.drawable.slide2, "Slide 2 \nmore text here"));
-        lstSlides.add(new Slide(R.drawable.slide1, "Slide 1 \nmore text here"));
-        lstSlides.add(new Slide(R.drawable.slide2, "Slide 2 \nmore text here"));
 
-        SliderPagerAdapter adapter = new SliderPagerAdapter(this, lstSlides);
-        sliderPager.setAdapter(adapter);
+        ApiService.getInstance().getUpcomingMovies("b716390ac8f59773894a29bdcdb2f4be")
+                .enqueue(new Callback<MovieResult>() {
+                    @Override
+                    public void onResponse(Call<MovieResult> call, Response<MovieResult> response) {
+                        lstSlides = response.body().getMovieResult();
+                        SliderPagerAdapter adapter = new SliderPagerAdapter(HomeActivity.this, lstSlides);
+                        sliderPager.setAdapter(adapter);
 
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new SliderTimer(), 4000, 6000);
+                        Timer timer = new Timer();
+                        timer.scheduleAtFixedRate(new SliderTimer(), 4000, 6000);
 
-        indicator.setupWithViewPager(sliderPager, true);
+                        indicator.setupWithViewPager(sliderPager, true);
+                    }
+
+                    @Override
+                    public void onFailure(Call<MovieResult> call, Throwable t) {
+
+                    }
+                });
     }
 
     @Override

@@ -9,7 +9,7 @@ public class MovieVideoResult implements Serializable {
     @SerializedName("id")
     private int id;
     @SerializedName("results")
-    private ArrayList<MovieVideoResponse> trailerResult;
+    private ArrayList<VideoResponse> trailerResult;
 
     public int getId() {
         return id;
@@ -19,11 +19,11 @@ public class MovieVideoResult implements Serializable {
         this.id = id;
     }
 
-    public ArrayList<MovieVideoResponse> getTrailerResult() {
+    public ArrayList<VideoResponse> getTrailerResult() {
         return trailerResult;
     }
 
-    public void setTrailerResult(ArrayList<MovieVideoResponse> trailerResult) {
+    public void setTrailerResult(ArrayList<VideoResponse> trailerResult) {
         this.trailerResult = trailerResult;
     }
 }
