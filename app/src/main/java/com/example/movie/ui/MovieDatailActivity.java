@@ -1,6 +1,10 @@
 package com.example.movie.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +21,9 @@ import com.example.movie.R;
 import com.example.movie.adapters.CastAdapter;
 import com.example.movie.api.ApiService;
 import com.example.movie.api.response.CreditsResult;
+import com.example.movie.models.Favorite;
+import com.example.movie.utils.FavoritesViewModel;
+import com.example.movie.utils.MovieRoomDatabase;
 import com.example.movie.utils.Urls;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -27,6 +34,7 @@ import com.example.movie.api.response.MovieVideoResult;
 import com.example.movie.models.Cast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Call;
@@ -58,6 +66,9 @@ public class MovieDatailActivity extends AppCompatActivity {
     @BindView(R.id.rv_cast)
     RecyclerView Rv_cast;
 
+    @BindView(R.id.fab_favorite)
+    FloatingActionButton fab_favorite;
+
     private CastAdapter castAdapter;
     private String movieId;
 
@@ -69,6 +80,35 @@ public class MovieDatailActivity extends AppCompatActivity {
         iniViews();
         // Setup List Cast
         iniCast();
+        // Favorite
+        FavoritesViewModel favoriteViewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
+        //favoriteAction(favoriteViewModel);
+
+        String id = getIntent().getExtras().getString("id");
+        String imageResourceId = getIntent().getExtras().getString("imgUrl");
+        String imageCover = getIntent().getExtras().getString("imgCover");
+        String movieTitle = getIntent().getExtras().getString("title");
+        String movieDescription = getIntent().getExtras().getString("overview");
+
+        fab_favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Favorite favorite = new Favorite(Integer.parseInt(id),imageCover,imageResourceId,movieTitle,movieDescription);
+                favoriteViewModel.insert(favorite);
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Added to favorites",
+                        Toast.LENGTH_SHORT);
+
+                toast.show();
+            }
+        });
+
+    }
+
+    private void favoriteAction(FavoritesViewModel favoriteViewModel) {
+
+
+
     }
 
     void iniViews() {
@@ -133,9 +173,5 @@ public class MovieDatailActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
     }
 }

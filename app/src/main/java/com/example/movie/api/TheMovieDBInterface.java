@@ -1,6 +1,7 @@
 package com.example.movie.api;
 
 import com.example.movie.api.response.CreditsResult;
+import com.example.movie.api.response.MovieResponse;
 import com.example.movie.api.response.MovieResult;
 import com.example.movie.api.response.MovieVideoResult;
 
@@ -21,4 +22,7 @@ public interface TheMovieDBInterface {
     
     @GET("movie/{id}/videos")
     Call<MovieVideoResult> getTrailers(@Path("id") String movieId, @Query("api_key") String userkey);
+
+    @GET("movie/{movie_id}")
+    Call<MovieResponse> getMovieById(@Path("movie_id") long movieId, @Query("api_key") String userkey);
 }
