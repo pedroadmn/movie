@@ -81,7 +81,7 @@ public class MovieDatailActivity extends AppCompatActivity {
                 Favorite favorite = new Favorite(Integer.parseInt(id),imageCover,imageResourceId,movieTitle,movieDescription);
                 favoriteViewModel.insert(favorite);
                 Toast toast = Toast.makeText(getApplicationContext(),
-                        "Added to favorites",
+                        R.string.sucess_favorite,
                         Toast.LENGTH_SHORT);
 
                 toast.show();

@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Filme</string>
+    <string name="top_rated_category_title">Filmes mais aclamados</string>
+    <string name="popular_category_title">Filmes mais populares</string>
+    <string name="favorites_category_title">Favoritos</string>
+    <string name="cast_title">Elenco</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Senha</string>
+    <string name="login_button">Entrar</string>
+    <string name="don_t_have_an_account">Não possui conta?</string>
+    <string name="sign_up_button">Cadastrar</string>
+    <string name="sucess_favorite">Adicionado aos favoritos</string>
+    <string name="sucess_login">Entrou com sucesso</string>
+</resources>
