@@ -25,6 +25,9 @@ import com.example.movie.models.Slide;
 import com.example.movie.adapters.SliderPagerAdapter;
 import com.example.movie.utils.FavoritesViewModel;
 import com.google.android.material.tabs.TabLayout;
+import com.i18next.android.I18Next;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +69,8 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         iniPopularMovies();
         iniWeekMovies();
         iniFavoritesMovies();
+
+        I18Next i18next = I18Next.getInstance();
     }
 
     private void iniFavoritesMovies() {
