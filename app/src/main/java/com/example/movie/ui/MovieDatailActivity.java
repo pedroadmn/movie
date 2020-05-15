@@ -14,6 +14,7 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -87,7 +88,8 @@ public class MovieDatailActivity extends AppCompatActivity {
         FavoritesViewModel favoriteViewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
         //favoriteAction(favoriteViewModel);
 
-        reference = firebaseDatabase.getInstance().getReference().child("Favorite");
+        reference = firebaseDatabase.getInstance().getReference().child("Favorite"+Settings.Secure.getString(this.getContentResolver(),
+                Settings.Secure.ANDROID_ID));
 
         iniEvent();
 
