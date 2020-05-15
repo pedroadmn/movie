@@ -4,4 +4,11 @@
     <string name="popular_category_title">Popular Films and Movies</string>
     <string name="favorites_category_title">Favorites</string>
     <string name="cast_title">Cast</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button">Login</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="sign_up_button">Sign up</string>
+    <string name="sucess_favorite">added to favorites</string>
+    <string name="sucess_login">Login Succeeded!</string>
 </resources>

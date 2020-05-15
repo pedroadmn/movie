@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
 
     @Override
     public void onValidationSucceeded() {
-        Toast.makeText(this, "Login Succeeded!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.sucess_login, Toast.LENGTH_SHORT).show();
         Intent i = new Intent(getApplicationContext(), HomeActivity.class);
         startActivity(i);
     }

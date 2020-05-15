@@ -31,7 +31,7 @@
             android:layout_marginRight="15dp"
             android:textColorHint="#fff"
             android:textColor="#fff"
-            android:hint="Email"
+            android:hint="@string/email_hint"
             android:foregroundTint="#fff"
             android:backgroundTint="#fff"
             android:focusableInTouchMode="true"
@@ -46,7 +46,7 @@
             android:layout_marginRight="15dp"
             android:textColorHint="#fff"
             android:textColor="#fff"
-            android:hint="Password"
+            android:hint="@string/password_hint"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:foregroundTint="#fff"
@@ -60,7 +60,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:onClick="login"
-            android:text="Login"
+            android:text="@string/login_button"
             android:textColor="#FAB333"
             />
 
@@ -75,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#f9f7f7"
-                android:text="Don't have an account?"
+                android:text="@string/don_t_have_an_account"
                 />
 
             <TextView
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:fontFamily="sans-serif"
-                android:text="Sign up"
+                android:text="@string/sign_up_button"
                 android:textColor="#FAB333"
                 android:textSize="14sp"
                 android:textStyle="bold" />
