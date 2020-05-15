@@ -9,6 +9,6 @@
     <string name="login_button">Entrar</string>
     <string name="don_t_have_an_account">Não possui conta?</string>
     <string name="sign_up_button">Cadastrar</string>
-    <string name="sucess_favorite">Adicionado aos favoritos</string>
+    <string name="sucess_favorite">adicionado aos favoritos</string>
     <string name="sucess_login">Entrou com sucesso</string>
 </resources>

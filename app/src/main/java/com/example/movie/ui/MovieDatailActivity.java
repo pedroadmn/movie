@@ -1,12 +1,20 @@
 package com.example.movie.ui;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -24,6 +32,12 @@ import com.example.movie.utils.Urls;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import com.example.movie.api.response.MovieVideoResult;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -55,7 +69,12 @@ public class MovieDatailActivity extends AppCompatActivity {
     FloatingActionButton fab_favorite;
 
     private CastAdapter castAdapter;
-    private String movieId;
+
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference reference;
+    ValueEventListener event;
+
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +88,11 @@ public class MovieDatailActivity extends AppCompatActivity {
         FavoritesViewModel favoriteViewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
         //favoriteAction(favoriteViewModel);
 
+        reference = firebaseDatabase.getInstance().getReference().child("Favorite"+Settings.Secure.getString(this.getContentResolver(),
+                Settings.Secure.ANDROID_ID));
+
+        iniEvent();
+
         String id = getIntent().getExtras().getString("id");
         String imageResourceId = getIntent().getExtras().getString("imgUrl");
         String imageCover = getIntent().getExtras().getString("imgCover");
@@ -80,6 +104,9 @@ public class MovieDatailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Favorite favorite = new Favorite(Integer.parseInt(id),imageCover,imageResourceId,movieTitle,movieDescription);
                 favoriteViewModel.insert(favorite);
+                onDataChangeNotify();
+
+                reference.child(String.valueOf(id+1)).setValue(favorite);
                 Toast toast = Toast.makeText(getApplicationContext(),
                         R.string.sucess_favorite,
                         Toast.LENGTH_SHORT);
@@ -87,7 +114,73 @@ public class MovieDatailActivity extends AppCompatActivity {
                 toast.show();
             }
         });
+    }
 
+    private void iniEvent() {
+        event = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    id = (int)dataSnapshot.getChildrenCount();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+    }
+
+    private void onDataChangeNotify() {
+        reference.addListenerForSingleValueEvent(event);
+
+        reference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                notification();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void notification(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel =
+                    new NotificationChannel("n", "n", NotificationManager.IMPORTANCE_DEFAULT);
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+
+            manager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "n")
+                .setContentText(getString(R.string.app_name))
+                .setSmallIcon(R.drawable.exo_notification_small_icon)
+                .setAutoCancel(true)
+                .setContentText(getIntent().getExtras().getString("title")+" "+getString(R.string.sucess_favorite));
+
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
+        managerCompat.notify(999,builder.build());
     }
 
     void iniViews() {

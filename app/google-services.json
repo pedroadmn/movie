@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "264055984290",
+    "firebase_url": "https://movietrailer-a86b6.firebaseio.com",
+    "project_id": "movietrailer-a86b6",
+    "storage_bucket": "movietrailer-a86b6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:264055984290:android:4220193ed45aa34eb647fb",
+        "android_client_info": {
+          "package_name": "com.example.movie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "264055984290-148sp0o20n24b815pil8sn2oh7kgp0rm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRmXIwDbURfi0Xgqvm5zpO_KJh9R9bua4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "264055984290-148sp0o20n24b815pil8sn2oh7kgp0rm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
