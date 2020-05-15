@@ -71,6 +71,8 @@ public class MovieDatailActivity extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference reference;
+    ValueEventListener event;
+
     int id;
 
     @Override
@@ -85,7 +87,9 @@ public class MovieDatailActivity extends AppCompatActivity {
         FavoritesViewModel favoriteViewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
         //favoriteAction(favoriteViewModel);
 
-        referenceFirebase();
+        reference = firebaseDatabase.getInstance().getReference().child("Favorite");
+
+        iniEvent();
 
         String id = getIntent().getExtras().getString("id");
         String imageResourceId = getIntent().getExtras().getString("imgUrl");
@@ -98,9 +102,9 @@ public class MovieDatailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Favorite favorite = new Favorite(Integer.parseInt(id),imageCover,imageResourceId,movieTitle,movieDescription);
                 favoriteViewModel.insert(favorite);
+                onDataChangeNotify();
 
                 reference.child(String.valueOf(id+1)).setValue(favorite);
-
                 Toast toast = Toast.makeText(getApplicationContext(),
                         R.string.sucess_favorite,
                         Toast.LENGTH_SHORT);
@@ -110,10 +114,8 @@ public class MovieDatailActivity extends AppCompatActivity {
         });
     }
 
-    private void referenceFirebase() {
-        reference = firebaseDatabase.getInstance().getReference().child("Favorite");
-
-        reference.addValueEventListener(new ValueEventListener() {
+    private void iniEvent() {
+        event = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
@@ -125,7 +127,11 @@ public class MovieDatailActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        };
+    }
+
+    private void onDataChangeNotify() {
+        reference.addListenerForSingleValueEvent(event);
 
         reference.addChildEventListener(new ChildEventListener() {
             @Override
