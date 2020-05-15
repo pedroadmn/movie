@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.movie.R;
@@ -25,15 +25,15 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
 
     @NotEmpty
     @Email
-    @BindView(R.id.email)
-    EditText emailEditText;
+    @BindView(R.id.edtEmail)
+    EditText edtEmail;
 
     @Password(min = 6, scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE_SYMBOLS)
-    @BindView(R.id.password)
-    EditText passwordEditText;
+    @BindView(R.id.edtPassword)
+    EditText edtPassword;
 
-    @BindView(R.id.login)
-    TextView login;
+    @BindView(R.id.btnLogin)
+    Button btnLogin;
 
     private Validator validator;
 
@@ -47,9 +47,9 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         validator = new Validator(this);
         validator.setValidationListener(this);
 
-        login = findViewById(R.id.login);
+        btnLogin = findViewById(R.id.btnLogin);
 
-        login.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
