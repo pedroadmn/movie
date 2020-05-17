@@ -11,4 +11,8 @@
     <string name="sign_up_button">Cadastrar</string>
     <string name="sucess_favorite">adicionado aos favoritos</string>
     <string name="sucess_login">Entrou com sucesso</string>
+    <string name="loginDetails">Esqueceu os detalhes do login?</string>
+    <string name="helpLogin"> Ajuda para Log In.</string>
+    <string name="register">Registrar</string>
+    <string name="fullName">Nome Completo</string>
 </resources>
