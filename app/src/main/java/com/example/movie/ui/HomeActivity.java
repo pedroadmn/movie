@@ -10,6 +10,9 @@ import androidx.viewpager.widget.ViewPager;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -21,13 +24,10 @@ import com.example.movie.adapters.MovieItemClickListener;
 import com.example.movie.R;
 import com.example.movie.api.response.MovieVideoResult;
 import com.example.movie.models.Favorite;
-import com.example.movie.models.Slide;
 import com.example.movie.adapters.SliderPagerAdapter;
 import com.example.movie.utils.FavoritesViewModel;
 import com.google.android.material.tabs.TabLayout;
-import com.i18next.android.I18Next;
-
-import org.json.JSONException;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +59,9 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
     @BindView(R.id.rv_favorites)
     RecyclerView MovieFavories;
 
+    FirebaseAuth mFirebaseAuth;
+    private FirebaseAuth.AuthStateListener mAuthStateListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,8 +72,6 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         iniPopularMovies();
         iniWeekMovies();
         iniFavoritesMovies();
-
-        I18Next i18next = I18Next.getInstance();
     }
 
     private void iniFavoritesMovies() {
@@ -203,4 +204,25 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
             });
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.logout, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+    //rest of app
 }
