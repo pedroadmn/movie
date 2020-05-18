@@ -11,4 +11,9 @@
     <string name="sign_up_button">Sign up</string>
     <string name="sucess_favorite">added to favorites</string>
     <string name="sucess_login">Login Succeeded!</string>
+    <string name="login">Log In</string>
+    <string name="loginDetails">Forgot your login details?</string>
+    <string name="helpLogin"> Get help signing in.</string>
+    <string name="register">Register</string>
+    <string name="fullName">Full Name</string>
 </resources>

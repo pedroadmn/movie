@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.movie.R;
@@ -35,6 +37,21 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
     @BindView(R.id.btnLogin)
     Button btnLogin;
 
+    @BindView(R.id.imgGoogle)
+    ImageView imgGoogle;
+
+    @BindView(R.id.imgFacebook)
+    ImageView imgFacebook;
+
+    @BindView(R.id.imgTwitter)
+    ImageView imgTwitter;
+
+    @BindView(R.id.txtHelpSingIn)
+    TextView txtHelpSingIn;
+
+    @BindView(R.id.txtRegister)
+    TextView txtRegister;
+
     private Validator validator;
 
     @Override
@@ -54,6 +71,14 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
             @Override
             public void onClick(View v) {
                 validator.validate();
+            }
+        });
+
+        txtRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(i);
             }
         });
     }
