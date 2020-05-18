@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="app_name">Film</string>
+  <string name="top_rated_category_title">Films les mieux notés</string>
+  <string name="popular_category_title">Films et films populaires</string>
+  <string name="favorites_category_title">Favoris</string>
+  <string name="cast_title">Jeter</string>
+  <string name="email_hint">Email</string>
+  <string name="password_hint">Mot de passe</string>
+  <string name="login_button">S\'identifier</string>
+  <string name="don_t_have_an_account">Vous n\'avez pas de compte?</string>
+  <string name="sign_up_button">S\'inscrire</string>
+  <string name="sucess_favorite">ajouté aux favoris</string>
+  <string name="sucess_login">Connexion réussie!</string>
+  <string name="login">S\'identifier</string>
+  <string name="loginDetails">Vous avez oublié vos identifiants de connexion?</string>
+  <string name="helpLogin">Obtenez de l\'aide pour vous connecter.</string>
+  <string name="register">S\'inscrire</string>
+  <string name="fullName">Nom complet</string>
+  <string name="valid_email_required">Email invalide</string>
+  <string name="valid_password_required">Mot de passe incorrect</string>
+  <string name="saripaar_required">Ce champ est requis</string>
+</resources>

@@ -16,4 +16,7 @@
     <string name="helpLogin"> Get help signing in.</string>
     <string name="register">Register</string>
     <string name="fullName">Full Name</string>
+    <string name="valid_email_required">Invalid email</string>
+    <string name="valid_password_required">Invalid password</string>
+    <string name="saripaar_required">This field is required</string>
 </resources>
