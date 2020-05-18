@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="app_name">Película</string>
+  <string name="top_rated_category_title">Películas mejor calificadas</string>
+  <string name="popular_category_title">Películas y películas populares</string>
+  <string name="favorites_category_title">Favoritos</string>
+  <string name="cast_title">Emitir</string>
+  <string name="email_hint">Correo electrónico</string>
+  <string name="password_hint">Contraseña</string>
+  <string name="login_button">Iniciar sesión</string>
+  <string name="don_t_have_an_account">¿No tienes una cuenta?</string>
+  <string name="sign_up_button">Regístrate</string>
+  <string name="sucess_favorite">agregado a favoritos</string>
+  <string name="sucess_login">Inicio de sesión realizado correctamente</string>
+  <string name="login">Iniciar sesión</string>
+  <string name="loginDetails">¿Ha olvidado sus datos de acceso?</string>
+  <string name="helpLogin">Obtenga ayuda para iniciar sesión.</string>
+  <string name="register">Registrarse</string>
+  <string name="fullName">Nombre completo</string>
+  <string name="valid_email_required">Email inválido</string>
+  <string name="valid_password_required">Contraseña invalida</string>
+  <string name="saripaar_required">este campo es requerido</string>
+</resources>

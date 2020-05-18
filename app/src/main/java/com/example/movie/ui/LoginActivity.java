@@ -25,12 +25,12 @@ import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity implements Validator.ValidationListener {
 
-    @NotEmpty
-    @Email
+    @NotEmpty(messageResId = R.string.saripaar_required)
+    @Email(messageResId = R.string.valid_email_required)
     @BindView(R.id.edtEmail)
     EditText edtEmail;
 
-    @Password(min = 6, scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE_SYMBOLS)
+    @Password(min = 6, scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE_SYMBOLS, messageResId = R.string.valid_password_required)
     @BindView(R.id.edtPassword)
     EditText edtPassword;
 
