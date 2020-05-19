@@ -33,7 +33,9 @@ android {
     }
 
 }
+
 apply plugin: 'com.google.gms.google-services'
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -47,12 +49,9 @@ dependencies {
     // Glide Library
     implementation 'com.github.bumptech.glide:glide:4.6.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
-    // Exoplayer library
-    implementation 'com.google.android.exoplayer:exoplayer:2.9.6'
     // Retrofit library
     implementation 'com.squareup.retrofit2:retrofit:2.8.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
-    implementation("com.squareup.moshi:moshi:1.9.2")
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
     // ButterKnife library
     implementation 'com.jakewharton:butterknife:10.2.1'
@@ -70,10 +69,12 @@ dependencies {
     implementation 'com.mobsandgeeks:android-saripaar:2.0.3'
 
     implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation "com.android.support:cardview-v7:28.0.0"
-    implementation 'com.i18next:i18next-android:1.0.0'
 
     //Firebase
     implementation 'com.google.firebase:firebase-analytics:17.2.2'
     implementation 'com.google.firebase:firebase-database:19.3.0'
+    implementation 'com.google.firebase:firebase-core:17.0.0'
+    implementation 'com.google.firebase:firebase-auth:19.1.0'
+
+    implementation 'com.google.android.exoplayer:exoplayer:2.9.6'
 }
