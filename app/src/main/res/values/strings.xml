@@ -12,11 +12,19 @@
     <string name="sucess_favorite">added to favorites</string>
     <string name="sucess_login">Login Succeeded!</string>
     <string name="login">Log In</string>
-    <string name="loginDetails">Forgot your login details?</string>
-    <string name="helpLogin"> Get help signing in.</string>
+    <string name="forgot_password">Forgot password?</string>
     <string name="register">Register</string>
     <string name="fullName">Full Name</string>
     <string name="valid_email_required">Invalid email</string>
     <string name="valid_password_required">Invalid password</string>
     <string name="saripaar_required">This field is required</string>
+    <string name="already_registered">Already Registered?</string>
+    <string name="login_here"> Login Here</string>
+    <string name="registered_successfully">Registered Successfully</string>
+    <string name="registered_unsuccessfully">Registered Unsuccessfully</string>
+    <string name="login_error_message">Login error, please Login Again</string>
+    <string name="reset_password">Reset Password?</string>
+    <string name="reset_password_link_message">Enter your email to received reset link."</string>
+    <string name="yes">Yes"</string>
+    <string name="no">No"</string>
 </resources>

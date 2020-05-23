@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.example.movie.api.ApiService;
@@ -78,21 +77,18 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
         FavoritesViewModel favoriteViewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
         List<MovieResponse> listRes = new ArrayList<>();
 
-        favoriteViewModel.getAllFavorites().observe(HomeActivity.this, new Observer<List<Favorite>>() {
-            @Override
-            public void onChanged(List<Favorite> favorites) {
-                listRes.clear();
-                for (int i =0; i<favorites.size(); i++) {
-                    listRes.add(
-                            new MovieResponse(favorites.get(i).getMovie_id(),favorites.get(i).getBackdropPath(),
-                                    favorites.get(i).getPosterPath(),favorites.get(i).getOriginalTitle(),
-                                    favorites.get(i).getOverview()));
-                }
-                MovieAdapter movieAdapter = new MovieAdapter(HomeActivity.this, listRes, HomeActivity.this);
-
-                MovieFavories.setLayoutManager(new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                MovieFavories.setAdapter(movieAdapter);
+        favoriteViewModel.getAllFavorites().observe(HomeActivity.this, favorites -> {
+            listRes.clear();
+            for (int i =0; i<favorites.size(); i++) {
+                listRes.add(
+                        new MovieResponse(favorites.get(i).getMovie_id(),favorites.get(i).getBackdropPath(),
+                                favorites.get(i).getPosterPath(),favorites.get(i).getOriginalTitle(),
+                                favorites.get(i).getOverview()));
             }
+            MovieAdapter movieAdapter = new MovieAdapter(HomeActivity.this, listRes, HomeActivity.this);
+
+            MovieFavories.setLayoutManager(new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false));
+            MovieFavories.setAdapter(movieAdapter);
         });
     }
 
@@ -192,14 +188,11 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
     class SliderTimer extends TimerTask {
         @Override
         public void run() {
-            HomeActivity.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (sliderPager.getCurrentItem() < lstSlides.size() - 1){
-                        sliderPager.setCurrentItem(sliderPager.getCurrentItem() + 1);
-                    } else {
-                        sliderPager.setCurrentItem(0);
-                    }
+            HomeActivity.this.runOnUiThread(() -> {
+                if (sliderPager.getCurrentItem() < lstSlides.size() - 1){
+                    sliderPager.setCurrentItem(sliderPager.getCurrentItem() + 1);
+                } else {
+                    sliderPager.setCurrentItem(0);
                 }
             });
         }
