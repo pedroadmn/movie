@@ -1,19 +1,24 @@
 package com.example.movie.ui;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.movie.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,11 +57,14 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
     @BindView(R.id.imgTwitter)
     ImageView imgTwitter;
 
-    @BindView(R.id.txtHelpSingIn)
-    TextView txtHelpSingIn;
+    @BindView(R.id.txtForgotPassword)
+    TextView txtForgotPassword;
 
     @BindView(R.id.txtRegister)
     TextView txtRegister;
+
+    @BindView(R.id.loginProgressBar)
+    ProgressBar loginProgressBar;
 
     private Validator validator;
 
@@ -73,11 +81,9 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
         validator = new Validator(this);
         validator.setValidationListener(this);
 
-        btnLogin = findViewById(R.id.btnLogin);
-
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+        /*mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser mFirebaseUser  = mFirebaseAuth.getCurrentUser();
@@ -88,38 +94,49 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
                     Toast.makeText(LoginActivity.this, "Please Login", Toast.LENGTH_SHORT).show();
                 }
             }
-        };
+        };*/
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                validator.validate();
-            }
-        });
+        btnLogin.setOnClickListener(v -> validator.validate());
 
-        txtRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
-                startActivity(i);
-            }
+        txtRegister.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), RegisterActivity.class)));
+
+        txtForgotPassword.setOnClickListener(v -> {
+            EditText resetMail = new EditText(v.getContext());
+            final AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(v.getContext());
+            passwordResetDialog.setTitle(getString(R.string.reset_password));
+            passwordResetDialog.setMessage(getString(R.string.reset_password_link_message));
+            passwordResetDialog.setView(resetMail);
+
+            passwordResetDialog.setPositiveButton(getString(R.string.yes), (dialog, which) -> {
+                mFirebaseAuth.sendPasswordResetEmail(resetMail.getText().toString().trim())
+                        .addOnSuccessListener(aVoid -> {
+                            Toast.makeText(LoginActivity.this, "Reset link sent to your email.", Toast.LENGTH_SHORT).show();
+                        }).addOnFailureListener(e -> {
+                            Toast.makeText(LoginActivity.this, "Error. Reset link was not sent: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
+            });
+
+            passwordResetDialog.setNegativeButton(getString(R.string.no), (dialog, which) -> {
+
+            });
+
+            passwordResetDialog.create().show();
         });
     }
 
     @Override
     public void onValidationSucceeded() {
+        loginProgressBar.setVisibility(View.VISIBLE);
         mFirebaseAuth.signInWithEmailAndPassword(edtEmail.getText().toString(), edtPassword.getText().toString())
-                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (!task.isSuccessful()){
-                            Toast.makeText(LoginActivity.this, "Login error, please Login Again", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(LoginActivity.this, R.string.sucess_login, Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(getApplicationContext(), HomeActivity.class);
-                            startActivity(i);
-                        }
+                .addOnCompleteListener(LoginActivity.this, task -> {
+                    if (!task.isSuccessful()){
+                        Toast.makeText(LoginActivity.this, getString(R.string.login_error_message), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(LoginActivity.this, R.string.sucess_login, Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+                        startActivity(i);
                     }
+                    loginProgressBar.setVisibility(View.INVISIBLE);
                 });
     }
 
@@ -141,6 +158,6 @@ public class LoginActivity extends AppCompatActivity implements Validator.Valida
     @Override
     protected void onStart() {
         super.onStart();
-        mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+        //mFirebaseAuth.addAuthStateListener(mAuthStateListener);
     }
 }

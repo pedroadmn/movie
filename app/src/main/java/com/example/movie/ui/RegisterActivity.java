@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.movie.R;
@@ -43,6 +45,12 @@ public class RegisterActivity extends AppCompatActivity {
     @BindView(R.id.btnRegister)
     Button btnRegister;
 
+    @BindView(R.id.txtLoginHere)
+    TextView txtLoginHere;
+
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+
     FirebaseAuth mFirebaseAuth;
 
     @Override
@@ -54,34 +62,30 @@ public class RegisterActivity extends AppCompatActivity {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mFirebaseAuth.createUserWithEmailAndPassword(edtRegisterEmail.getText().toString(), edtRegisterPassword.getText().toString())
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (!task.isSuccessful()){
-                                    Toast.makeText(RegisterActivity.this, "SignUp Unsuccessful", Toast.LENGTH_SHORT).show();
-                                }
-                                else{
-                                    User user = new User(edtFullName.getText().toString(), edtRegisterEmail.getText().toString());
-                                    FirebaseDatabase.getInstance().getReference("Users")
-                                            .child(mFirebaseAuth.getCurrentUser().getUid())
-                                            .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()){
-                                                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                                            } else {
-                                                Toast.makeText(RegisterActivity.this, "SignUp Unsuccessful", Toast.LENGTH_SHORT).show();
-                                            }
+        txtLoginHere.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), LoginActivity.class)));
+
+        btnRegister.setOnClickListener(v -> {
+            progressBar.setVisibility(View.VISIBLE);
+            mFirebaseAuth.createUserWithEmailAndPassword(edtRegisterEmail.getText().toString().trim(), edtRegisterPassword.getText().toString().trim())
+                    .addOnCompleteListener(task -> {
+                        if (!task.isSuccessful()){
+                            Toast.makeText(RegisterActivity.this, "SignUp Unsuccessful", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            User user = new User(edtFullName.getText().toString(), edtRegisterEmail.getText().toString());
+                            FirebaseDatabase.getInstance().getReference("Users")
+                                    .child(mFirebaseAuth.getCurrentUser().getUid())
+                                    .setValue(user).addOnCompleteListener(task1 -> {
+                                        if (task1.isSuccessful()){
+                                            Toast.makeText(RegisterActivity.this, getString(R.string.registered_successfully), Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                                        } else {
+                                            Toast.makeText(RegisterActivity.this, getString(R.string.registered_unsuccessfully), Toast.LENGTH_SHORT).show();
                                         }
                                     });
-                                }
-                            }
-                        });
-            }
+                        }
+                        progressBar.setVisibility(View.INVISIBLE);
+                    });
         });
     }
 }
