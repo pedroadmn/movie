@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,7 +13,6 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.bumptech.glide.Glide;
 import com.example.movie.R;
 import com.example.movie.api.response.MovieResponse;
-import com.example.movie.models.Slide;
 import com.example.movie.utils.Urls;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -40,11 +38,7 @@ public class SliderPagerAdapter extends PagerAdapter {
 
         FloatingActionButton playButton = slideLayout.findViewById(R.id.slide_action_btn);
 
-        playButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                movieItemClickListener.onSlideMovieClick(mList.get(position));
-            }
-        });
+        playButton.setOnClickListener(v -> movieItemClickListener.onSlideMovieClick(mList.get(position)));
 
         ImageView slideImg = slideLayout.findViewById(R.id.slide_img);
         TextView slideText = slideLayout.findViewById(R.id.slide_title);
