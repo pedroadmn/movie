@@ -82,13 +82,11 @@ public class MovieDatailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_detail);
         ButterKnife.bind(this);
         iniViews();
-        // Setup List Cast
         iniCast();
-        // Favorite
         FavoritesViewModel favoriteViewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
-        //favoriteAction(favoriteViewModel);
 
-        reference = firebaseDatabase.getInstance().getReference().child("Favorite"+Settings.Secure.getString(this.getContentResolver(),
+        reference = firebaseDatabase.getInstance()
+                .getReference().child("Favorite"+Settings.Secure.getString(this.getContentResolver(),
                 Settings.Secure.ANDROID_ID));
 
         iniEvent();
@@ -99,20 +97,17 @@ public class MovieDatailActivity extends AppCompatActivity {
         String movieTitle = getIntent().getExtras().getString("title");
         String movieDescription = getIntent().getExtras().getString("overview");
 
-        fab_favorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Favorite favorite = new Favorite(Integer.parseInt(id),imageCover,imageResourceId,movieTitle,movieDescription);
-                favoriteViewModel.insert(favorite);
-                onDataChangeNotify();
+        fab_favorite.setOnClickListener(v -> {
+            Favorite favorite = new Favorite(Integer.parseInt(id),imageCover,imageResourceId,movieTitle,movieDescription);
+            favoriteViewModel.insert(favorite);
+            onDataChangeNotify();
 
-                reference.child(String.valueOf(id+1)).setValue(favorite);
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        R.string.sucess_favorite,
-                        Toast.LENGTH_SHORT);
+            reference.child(String.valueOf(id+1)).setValue(favorite);
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    R.string.sucess_favorite,
+                    Toast.LENGTH_SHORT);
 
-                toast.show();
-            }
+            toast.show();
         });
     }
 

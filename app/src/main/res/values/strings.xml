@@ -25,6 +25,8 @@
     <string name="login_error_message">Login error, please Login Again</string>
     <string name="reset_password">Reset Password?</string>
     <string name="reset_password_link_message">Enter your email to received reset link."</string>
-    <string name="yes">Yes"</string>
-    <string name="no">No"</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="link_sent_message">Reset link sent to your email.</string>
+    <string name="link_not_sent_message">Error. Reset link was not sent:</string>
 </resources>

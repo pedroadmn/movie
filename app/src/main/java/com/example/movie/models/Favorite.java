@@ -1,13 +1,9 @@
 package com.example.movie.models;
 
-import android.provider.ContactsContract;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
-import java.sql.Date;
 
 @Entity(tableName = "favorite")
 public class Favorite {

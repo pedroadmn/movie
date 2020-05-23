@@ -1,6 +1,5 @@
 package com.example.movie.ui;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -14,9 +13,6 @@ import android.widget.Toast;
 
 import com.example.movie.R;
 import com.example.movie.models.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.mobsandgeeks.saripaar.annotation.Email;
@@ -62,14 +58,17 @@ public class RegisterActivity extends AppCompatActivity {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-        txtLoginHere.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), LoginActivity.class)));
+        txtLoginHere.setOnClickListener(v -> {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            finishAffinity();
+        });
 
         btnRegister.setOnClickListener(v -> {
             progressBar.setVisibility(View.VISIBLE);
             mFirebaseAuth.createUserWithEmailAndPassword(edtRegisterEmail.getText().toString().trim(), edtRegisterPassword.getText().toString().trim())
                     .addOnCompleteListener(task -> {
                         if (!task.isSuccessful()){
-                            Toast.makeText(RegisterActivity.this, "SignUp Unsuccessful", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, getString(R.string.registered_unsuccessfully), Toast.LENGTH_SHORT).show();
                         }
                         else {
                             User user = new User(edtFullName.getText().toString(), edtRegisterEmail.getText().toString());
