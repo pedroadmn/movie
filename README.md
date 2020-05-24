@@ -13,8 +13,8 @@ We are using these libraries/technologies:
   &nbsp;&nbsp;&nbsp; **Glide** - To load images on the views.   
   &nbsp;&nbsp;&nbsp; **Room Database** - To save locally Favorite Movies.  
   &nbsp;&nbsp;&nbsp; **Android Youtube Player** - To show Movie Trailer on youtube.  
-  &nbsp;&nbsp;&nbsp; **Butter Knife** - To bind field and method for Android views.
-  &nbsp;&nbsp;&nbsp; **Saripaar** - To validate fields.
+  &nbsp;&nbsp;&nbsp; **Butter Knife** - To bind field and method for Android views.  
+  &nbsp;&nbsp;&nbsp; **Saripaar** - To validate fields.  
   
 **Screenshots**
   
