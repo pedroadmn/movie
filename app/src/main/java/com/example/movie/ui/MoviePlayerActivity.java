@@ -8,28 +8,25 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.movie.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class MoviePlayerActivity extends AppCompatActivity {
 
-    @BindView(R.id.youtube_player_view)
     YouTubePlayerView youTubePlayerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ButterKnife.bind(this);
-
         setFullScreen();
         setContentView(R.layout.activity_movie_player);
         hideActionBar();
+
+        youTubePlayerView = findViewById(R.id.youtube_player_view);
 
         getLifecycle().addObserver(youTubePlayerView);
 
