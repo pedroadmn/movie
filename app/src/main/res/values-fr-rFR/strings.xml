@@ -20,4 +20,16 @@
   <string name="valid_email_required">Email invalide</string>
   <string name="valid_password_required">Mot de passe incorrect</string>
   <string name="saripaar_required">Ce champ est requis</string>
+  <string name="forgot_password">mot de passe oublié?</string>
+  <string name="already_registered">Déjà enregistré?</string>
+  <string name="login_here">Connectez-vous ici</string>
+  <string name="registered_successfully">enregistré avec succès</string>
+  <string name="registered_unsuccessfully">Enregistré sans succès</string>
+  <string name="login_error_message">Erreur de connexion, veuillez vous reconnecter</string>
+  <string name="reset_password">Réinitialiser le mot de passe?</string>
+  <string name="reset_password_link_message">Saisissez votre e-mail pour recevoir le lien de réinitialisation. \"</string>
+  <string name="yes">Oui</string>
+  <string name="no">Non</string>
+  <string name="link_sent_message">Réinitialiser le lien envoyé à votre e-mail.</string>
+  <string name="link_not_sent_message">Erreur. Le lien de réinitialisation n\'a pas été envoyé:</string>
 </resources>
