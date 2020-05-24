@@ -14,10 +14,22 @@
   <string name="sucess_login">Entrou com sucesso</string>
   <string name="login">Conecte-se</string>
   <string name="loginDetails">Esqueceu os detalhes do login?</string>
-  <string name="helpLogin">Ajuda para Log In.</string>
+  <string name="helpLogin"> Ajuda para Log In.</string>
   <string name="register">Registrar</string>
   <string name="fullName">Nome Completo</string>
   <string name="valid_email_required">E-mail inválido</string>
   <string name="valid_password_required">Senha inválida</string>
   <string name="saripaar_required">Este campo é obrigatório</string>
+  <string name="forgot_password">Esqueceu a senha?</string>
+  <string name="already_registered">Já registrado?</string>
+  <string name="login_here">Entre aqui</string>
+  <string name="registered_successfully">Registrado com sucesso</string>
+  <string name="registered_unsuccessfully">Registrado sem sucesso</string>
+  <string name="login_error_message">Erro de login, faça login novamente</string>
+  <string name="reset_password">Redefinir senha?</string>
+  <string name="reset_password_link_message">Digite seu email no link de redefinição recebido \".</string>
+  <string name="yes">sim</string>
+  <string name="no">Não</string>
+  <string name="link_sent_message">Redefinir o link enviado para o seu email.</string>
+  <string name="link_not_sent_message">Erro. O link de redefinição não foi enviado:</string>
 </resources>
