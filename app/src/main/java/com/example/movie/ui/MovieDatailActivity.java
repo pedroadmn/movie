@@ -158,7 +158,7 @@ public class MovieDatailActivity extends AppCompatActivity {
         });
     }
 
-    private void notification(){
+    private void notification() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel channel =
                     new NotificationChannel("n", "n", NotificationManager.IMPORTANCE_DEFAULT);
@@ -170,7 +170,7 @@ public class MovieDatailActivity extends AppCompatActivity {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "n")
                 .setContentText(getString(R.string.app_name))
-                .setSmallIcon(R.drawable.exo_notification_small_icon)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(true)
                 .setContentText(getIntent().getExtras().getString("title")+" "+getString(R.string.sucess_favorite));
 
