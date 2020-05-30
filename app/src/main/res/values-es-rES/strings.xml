@@ -32,4 +32,5 @@
   <string name="no">No</string>
   <string name="link_sent_message">Restablecer enlace enviado a su correo electrónico.</string>
   <string name="link_not_sent_message">Error. No se envió el enlace de reinicio:</string>
+  <string name="press_again_to_close_app">Presione una vez más para cerrar la aplicación.</string>
 </resources>

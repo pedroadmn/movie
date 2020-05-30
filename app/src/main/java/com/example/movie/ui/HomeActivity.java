@@ -1,7 +1,6 @@
 package com.example.movie.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.movie.api.ApiService;
 import com.example.movie.api.response.MovieResponse;
@@ -22,7 +22,6 @@ import com.example.movie.adapters.MovieAdapter;
 import com.example.movie.adapters.MovieItemClickListener;
 import com.example.movie.R;
 import com.example.movie.api.response.MovieVideoResult;
-import com.example.movie.models.Favorite;
 import com.example.movie.adapters.SliderPagerAdapter;
 import com.example.movie.utils.FavoritesViewModel;
 import com.google.android.material.tabs.TabLayout;
@@ -58,8 +57,9 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
     @BindView(R.id.rv_favorites)
     RecyclerView MovieFavories;
 
-    FirebaseAuth mFirebaseAuth;
-    private FirebaseAuth.AuthStateListener mAuthStateListener;
+    private static long backPressed;
+
+    private static final int TIME_INTERVAL = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -217,5 +217,14 @@ public class HomeActivity extends AppCompatActivity implements MovieItemClickLis
                 return super.onOptionsItemSelected(item);
         }
     }
-    //rest of app
+
+    @Override
+    public void onBackPressed() {
+        if (backPressed + TIME_INTERVAL > System.currentTimeMillis()){
+            super.onBackPressed();
+        } else {
+            Toast.makeText(getBaseContext(), "Pressione mais uma vez para fechar o aplicativo.", Toast.LENGTH_SHORT).show();
+        }
+        backPressed = System.currentTimeMillis();
+    }
 }

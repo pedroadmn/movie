@@ -32,4 +32,5 @@
   <string name="no">Não</string>
   <string name="link_sent_message">Redefinir o link enviado para o seu email.</string>
   <string name="link_not_sent_message">Erro. O link de redefinição não foi enviado:</string>
+  <string name="press_again_to_close_app">Pressione mais uma vez para fechar o aplicativo.</string>
 </resources>

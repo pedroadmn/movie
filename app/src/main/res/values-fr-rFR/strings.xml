@@ -32,4 +32,5 @@
   <string name="no">Non</string>
   <string name="link_sent_message">Réinitialiser le lien envoyé à votre e-mail.</string>
   <string name="link_not_sent_message">Erreur. Le lien de réinitialisation n\'a pas été envoyé:</string>
+  <string name="press_again_to_close_app">Appuyez une fois de plus pour fermer l\'application.</string>
 </resources>
